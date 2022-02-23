@@ -16,34 +16,39 @@
 
 package types
 
-import "fmt"
+import (
+	"github.com/centrifuge/go-substrate-rpc-client/v4/scale"
+)
 
-// Signature is a H512
-type Signature H512
-
-// NewSignature creates a new Signature type
-func NewSignature(b []byte) Signature {
-	h := Signature{}
-	copy(h[:], b)
-	return h
+// MigrationCompute is an enum describing how a migration was computed.
+type MigrationCompute struct {
+	IsSigned bool
+	IsAuto   bool
 }
 
-// Hex returns a hex string representation of the value (not of the encoded value)
-func (h Signature) Hex() string {
-	return fmt.Sprintf("%#x", h[:])
+func (m *MigrationCompute) Decode(decoder scale.Decoder) error {
+	b, err := decoder.ReadOneByte()
+	if err != nil {
+		return err
+	}
+
+	switch b {
+	case 0:
+		m.IsSigned = true
+	case 1:
+		m.IsAuto = true
+	}
+
+	return nil
 }
 
-// EcdsaSignature is a 65 byte array
-type EcdsaSignature [65]byte
+func (m MigrationCompute) Encode(encoder scale.Encoder) error {
+	switch {
+	case m.IsSigned:
+		return encoder.PushByte(0)
+	case m.IsAuto:
+		return encoder.PushByte(1)
+	}
 
-// NewEcdsaSignature creates a new EcdsaSignature type
-func NewEcdsaSignature(b []byte) EcdsaSignature {
-	h := EcdsaSignature{}
-	copy(h[:], b)
-	return h
-}
-
-// Hex returns a hex string representation of the value (not of the encoded value)
-func (eh EcdsaSignature) Hex() string {
-	return fmt.Sprintf("%#x", eh[:])
+	return nil
 }

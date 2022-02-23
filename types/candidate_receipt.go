@@ -16,34 +16,23 @@
 
 package types
 
-import "fmt"
+type CollatorID [32]U8
+type CollatorSignature [64]U8
 
-// Signature is a H512
-type Signature H512
-
-// NewSignature creates a new Signature type
-func NewSignature(b []byte) Signature {
-	h := Signature{}
-	copy(h[:], b)
-	return h
+type CandidateDescriptor struct {
+	ParachainID                  ParachainID
+	RelayParent                  Hash
+	CollatorID                   CollatorID
+	PersistentValidationDataHash Hash
+	PoVHash                      Hash
+	ErasureRoot                  Hash
+	CollatorSignature            CollatorSignature
+	ParaHead                     Hash
+	ValidationCodeHash           Hash
 }
 
-// Hex returns a hex string representation of the value (not of the encoded value)
-func (h Signature) Hex() string {
-	return fmt.Sprintf("%#x", h[:])
-}
+type CandidateReceipt struct {
+	Descriptor CandidateDescriptor
 
-// EcdsaSignature is a 65 byte array
-type EcdsaSignature [65]byte
-
-// NewEcdsaSignature creates a new EcdsaSignature type
-func NewEcdsaSignature(b []byte) EcdsaSignature {
-	h := EcdsaSignature{}
-	copy(h[:], b)
-	return h
-}
-
-// Hex returns a hex string representation of the value (not of the encoded value)
-func (eh EcdsaSignature) Hex() string {
-	return fmt.Sprintf("%#x", eh[:])
+	CommitmentsHash Hash
 }

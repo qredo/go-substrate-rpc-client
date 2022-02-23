@@ -1,12 +1,14 @@
-module github.com/centrifuge/go-substrate-rpc-client/v4
+module github.com/qredo/go-substrate-rpc-client/v4
 
 go 1.17
 
 require (
 	github.com/btcsuite/btcutil v1.0.2
+	github.com/centrifuge/go-substrate-rpc-client/v4 v4.0.0-00010101000000-000000000000
 	github.com/davecgh/go-spew v1.1.1
 	github.com/deckarep/golang-set v1.7.1
 	github.com/ethereum/go-ethereum v1.10.12
+	github.com/google/gofuzz v1.1.1-0.20200604201612-c04b05f3adfa
 	github.com/gorilla/websocket v1.4.2
 	github.com/pierrec/xxHash v0.1.5
 	github.com/rs/cors v1.8.0
@@ -34,3 +36,5 @@ require (
 	golang.org/x/sys v0.0.0-20210816183151-1e6c022a8912 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
+
+replace github.com/centrifuge/go-substrate-rpc-client/v4 => ./
