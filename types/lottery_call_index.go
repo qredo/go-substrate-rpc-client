@@ -16,34 +16,37 @@
 
 package types
 
-import "fmt"
+import "github.com/centrifuge/go-substrate-rpc-client/v4/scale"
 
-// Signature is a H512
-type Signature H512
-
-// NewSignature creates a new Signature type
-func NewSignature(b []byte) Signature {
-	h := Signature{}
-	copy(h[:], b)
-	return h
+type LotteryCallIndex struct {
+	PalletIndex U8
+	CallIndex   U8
 }
 
-// Hex returns a hex string representation of the value (not of the encoded value)
-func (h Signature) Hex() string {
-	return fmt.Sprintf("%#x", h[:])
+func (m *LotteryCallIndex) Decode(decoder scale.Decoder) error {
+	err := decoder.Decode(&m.PalletIndex)
+	if err != nil {
+		return err
+	}
+
+	err = decoder.Decode(&m.CallIndex)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
-// EcdsaSignature is a 65 byte array
-type EcdsaSignature [65]byte
+func (m LotteryCallIndex) Encode(encoder scale.Encoder) error {
+	err := encoder.Encode(m.PalletIndex)
+	if err != nil {
+		return err
+	}
 
-// NewEcdsaSignature creates a new EcdsaSignature type
-func NewEcdsaSignature(b []byte) EcdsaSignature {
-	h := EcdsaSignature{}
-	copy(h[:], b)
-	return h
-}
+	err = encoder.Encode(m.CallIndex)
+	if err != nil {
+		return err
+	}
 
-// Hex returns a hex string representation of the value (not of the encoded value)
-func (eh EcdsaSignature) Hex() string {
-	return fmt.Sprintf("%#x", eh[:])
+	return nil
 }

@@ -9,6 +9,16 @@
 Substrate RPC client in Go. It provides APIs and types around Polkadot and any Substrate-based chain RPC calls.
 This client is modelled after [polkadot-js/api](https://github.com/polkadot-js/api).
 
+## Fork Notes
+To provide ECDSA signature decoding whilst retaining `github.com/ChainSafe/go-schnorrkel v0.0.0-20210318173838-ccb5cd955283` indirect dependency, use [tag 4.0.2](releases/tag/v4.0.2).
+
+Add to your project's `go.mod`:
+
+```go
+replace github.com/centrifuge/go-substrate-rpc-client/v4 v4.0.0 => github.com/qredo/go-substrate-rpc-client/v4 v4.0.1
+```
+Run `go mod tidy` in your project's root.
+
 ## State
 
 This package is feature complete, but it is relatively new and might still contain bugs. We advice to use it with caution in production. It comes without any warranties, please refer to LICENCE for details.
