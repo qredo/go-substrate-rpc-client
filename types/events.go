@@ -574,6 +574,26 @@ type EventStakingWithdrawn struct {
 	Topics []Hash
 }
 
+// TODO: Polkadot Specific, include in PR to upstream
+// EventStakingValidatorPrefsSet - emitted when a Validator has set their preferences
+type EventStakingValidatorPrefsSet struct {
+	Phase          Phase
+	ID             AccountID
+	ValidatorPrefs ValidatorPrefs
+	Topics         []Hash
+}
+
+type ValidatorPrefs struct {
+	Commission Perbill
+	Blocked    bool
+}
+
+type Perbill struct {
+	Value U32
+}
+
+// ENDTODO
+
 // EventStateTrieMigrationMigrated is emitted when the given number of `(top, child)` keys were migrated respectively,
 // with the given `compute`.
 type EventStateTrieMigrationMigrated struct {
