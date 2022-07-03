@@ -169,11 +169,12 @@ func (x XCMError) Encode(encoder scale.Encoder) error { //nolint:gocyclo,funlen
 	case x.IsAssetNotFound:
 		return encoder.PushByte(8)
 	case x.IsFailedToTransactAsset:
-		if err := encoder.PushByte(9); err != nil {
-			return err
-		}
-
-		return encoder.Encode(x.FailedToTransactAsset)
+		return encoder.PushByte(9)
+		//		if err := encoder.PushByte(9); err != nil {
+		//			return err
+		//		}
+		//
+		//		return encoder.Encode(x.FailedToTransactAsset)
 	case x.IsNotWithdrawable:
 		return encoder.PushByte(10)
 	case x.IsLocationCannotHold:
