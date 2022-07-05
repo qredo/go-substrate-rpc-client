@@ -327,6 +327,10 @@ func (pd Decoder) Decode(target interface{}) error {
 
 // DecodeIntoReflectValue populates a writable reflect.Value from the stream
 func (pd Decoder) DecodeIntoReflectValue(target reflect.Value) error {
+	if !target.IsValid() || target.IsNil() {
+		return fmt.Errorf("invalid or nil target reflect value")
+	}
+
 	t := target.Type()
 	if !target.CanSet() {
 		return fmt.Errorf("Unsettable value %v", t)
