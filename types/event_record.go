@@ -268,7 +268,7 @@ type EventRecords struct {
 
 	Proxy_Announced        []EventProxyAnnounced        `test-gen-blockchain:"centrifuge-parachain"`
 	Proxy_AnonymousCreated []EventProxyAnonymousCreated `test-gen-blockchain:"centrifuge-parachain"`
-	Proxy_Added            []EventProxyAdded            `test-gen-blockchain:"centrifuge-parachain"`
+	Proxy_ProxyAdded       []EventProxyAdded            `test-gen-blockchain:"centrifuge-parachain"`
 	Proxy_ProxyExecuted    []EventProxyProxyExecuted    `test-gen-blockchain:"centrifuge-parachain"`
 
 	Recovery_AccountRecovered  []EventRecoveryAccountRecovered `test-gen-skip:"true"`
