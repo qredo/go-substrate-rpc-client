@@ -327,9 +327,9 @@ func (pd Decoder) Decode(target interface{}) error {
 
 // DecodeIntoReflectValue populates a writable reflect.Value from the stream
 func (pd Decoder) DecodeIntoReflectValue(target reflect.Value) error {
-	if !target.IsValid() || target.IsNil() {
-		return fmt.Errorf("invalid or nil target reflect value")
-	}
+	//	if !target.IsValid() || target.IsNil() {
+	//		return fmt.Errorf("invalid or nil target reflect value")
+	//	}
 
 	t := target.Type()
 	if !target.CanSet() {
@@ -406,7 +406,7 @@ func (pd Decoder) DecodeIntoReflectValue(target reflect.Value) error {
 		isNil := target.IsNil()
 		if isNil {
 			// target.set
-			// return nil
+			return nil
 		}
 		ptr := target.Elem()
 		err := pd.DecodeIntoReflectValue(ptr)
