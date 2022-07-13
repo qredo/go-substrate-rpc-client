@@ -1121,7 +1121,9 @@ func (d *DemocracyVote) Decode(decoder scale.Decoder) error {
 	// ---
 	b, err := decoder.ReadOneByte()
 	d.Aye = (128 & b) == 128
-	vb := DemocracyConviction(b)
+	lowerBits := (127 & b)
+	//	vb := DemocracyConviction(b)
+	vb := DemocracyConviction(lowerBits)
 	switch vb {
 	case None, Locked1x, Locked2x, Locked3x, Locked4x, Locked5x, Locked6x:
 		d.Conviction = vb
