@@ -1083,13 +1083,21 @@ const (
 	Locked5x = 5
 	// Locked6x votes, locked for 32x...
 	Locked6x = 6
+
+	Unlocked01x = 128
+	Unlocked1x  = 129
+	Unlocked2x  = 130
+	Unlocked3x  = 131
+	Unlocked4x  = 132
+	Unlocked5x  = 133
+	Unlocked6x  = 134
 )
 
 func (dc *DemocracyConviction) Decode(decoder scale.Decoder) error {
 	b, err := decoder.ReadOneByte()
 	vb := DemocracyConviction(b)
 	switch vb {
-	case None, Locked1x, Locked2x, Locked3x, Locked4x, Locked5x, Locked6x:
+	case None, Locked1x, Locked2x, Locked3x, Locked4x, Locked5x, Locked6x, Unlocked01x, Unlocked1x, Unlocked2x, Unlocked3x, Unlocked4x, Unlocked5x, Unlocked6x:
 		*dc = vb
 	default:
 		return fmt.Errorf("unknown DemocracyConviction enum: %v", vb)
