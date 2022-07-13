@@ -1083,21 +1083,13 @@ const (
 	Locked5x = 5
 	// Locked6x votes, locked for 32x...
 	Locked6x = 6
-
-	Unlocked01x = 128
-	Unlocked1x  = 129
-	Unlocked2x  = 130
-	Unlocked3x  = 131
-	Unlocked4x  = 132
-	Unlocked5x  = 133
-	Unlocked6x  = 134
 )
 
 func (dc *DemocracyConviction) Decode(decoder scale.Decoder) error {
 	b, err := decoder.ReadOneByte()
 	vb := DemocracyConviction(b)
 	switch vb {
-	case None, Locked1x, Locked2x, Locked3x, Locked4x, Locked5x, Locked6x, Unlocked01x, Unlocked1x, Unlocked2x, Unlocked3x, Unlocked4x, Unlocked5x, Unlocked6x:
+	case None, Locked1x, Locked2x, Locked3x, Locked4x, Locked5x, Locked6x:
 		*dc = vb
 	default:
 		return fmt.Errorf("unknown DemocracyConviction enum: %v", vb)
@@ -1114,12 +1106,30 @@ type DemocracyVote struct {
 	Conviction DemocracyConviction
 }
 
+// Decode DemocracyVote - the `Aye` (bool) and `Conviction` (enum) are encoded into a single byte. The topmost
+// bit indicates the true/false status of `Aye`. The remaining bits indicate the conviction of the vote.
 func (d *DemocracyVote) Decode(decoder scale.Decoder) error {
-	if err := decoder.Decode(&d.Aye); err != nil {
-		return err
-	}
 
-	return decoder.Decode(&d.Conviction)
+	//	if err := decoder.Decode(&d.Aye); err != nil {
+	//		return err
+	//	}
+	//	copiedByte, _ := decoder.ReadOneByte()
+	//	topBit := (128 & copiedByte) == 128
+	//	d.Aye = topBit
+	//
+	//	return decoder.Decode(&d.Conviction)
+	// ---
+	b, err := decoder.ReadOneByte()
+	d.Aye = (128 & b) == 128
+	vb := DemocracyConviction(b)
+	switch vb {
+	case None, Locked1x, Locked2x, Locked3x, Locked4x, Locked5x, Locked6x:
+		d.Conviction = vb
+	default:
+		return fmt.Errorf("unknown DemocracyConviction enum: %v", vb)
+	}
+	return err
+
 }
 
 func (d DemocracyVote) Encode(encoder scale.Encoder) error {
