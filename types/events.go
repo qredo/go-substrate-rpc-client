@@ -2404,7 +2404,7 @@ func (pt *ProxyType) Decode(decoder scale.Decoder) error {
 	case Any, NonTransfer, Governance, Staking:
 		*pt = vb
 	default:
-		return fmt.Errorf("unknown ProxyType enum: %v", vb)
+		*pt = Any
 	}
 	return err
 }
